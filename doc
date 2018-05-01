@@ -1,0 +1,213 @@
+Step 1: For state Texas, we need a state campaign contribution dataset built. This dataset will be named ‘texas_campaign_finance`
+
+And In this dataset, we would be mostly interested in date, contributors names, occupation, employer names, candidates name, schedule, amount and data source url. But we want to scrape all the data we can.
+
+There will be four tables, and they will look like this below:
+`texas_campaign_finance_candidates` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `full_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `first_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `middle_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `party` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `current_occupation` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `office_sought` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `district` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `full_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address_1` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address_1_cleaned` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address_2` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address_2_cleaned` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `city` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `county` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `zip` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `website` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pipeline_person_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `SUID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `source_table` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `source_table_id` bigint(20) DEFAULT NULL,
+  `pl_staging_id` bigint(20) DEFAULT NULL,
+  `pl_staging_loki_status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pl_production_id` bigint(20) DEFAULT NULL,
+  `pl_production_loki_status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `added_by_loki` tinyint(4) DEFAULT '0',
+  `is_clean` tinyint(4) NOT NULL DEFAULT '0',
+  `old_pl_staging_id` bigint(20) DEFAULT NULL,
+  `old_pl_staging_loki_status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `match_staging_checked` tinyint(4) NOT NULL DEFAULT '0',
+  `old_pl_production_id` bigint(20) DEFAULT NULL,
+  `old_pl_production_loki_status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `match_production_checked` tinyint(4) NOT NULL DEFAULT '0',
+  `real_candidate` tinyint(4) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci |
++++
+1 row in set (0.13 sec)
+
+mysql> show create table texas_campaign_finance_committees;
+`texas_campaign_finance_committees` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `candidate_id` bigint(20) DEFAULT NULL,
+  `committee_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `committee_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `district` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `party` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `election_year` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `office_sought` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `county` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `chair_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `chair_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `chair_city` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `chair_state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `chair_zip` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `chair_phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `chair_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `treasurer_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `treasurer_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `treasurer_city` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `treasurer_state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `treasurer_zip` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `treasurer_phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `treasurer_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `parent_entity` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `parent_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `parent_city` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `parent_state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `parent_zip` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contact_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contact_address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contact_city` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contact_state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contact_zip` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contact_phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `data_source_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `data_source_state` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `source_table` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `source_table_id` bigint(20) DEFAULT NULL,
+  `pl_production_id` bigint(20) DEFAULT NULL,
+  `pl_production_loki_status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pl_staging_id` bigint(20) DEFAULT NULL,
+  `pl_staging_loki_status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `candidate_by_loki` tinyint(4) DEFAULT '0',
+  `cleaned_committee_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci |
++++
+1 row in set (0.01 sec)
+
+
+
+
+`texas_campaign_finance_contributions` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `date` date DEFAULT NULL,
+  `committee_id` bigint(20) DEFAULT NULL,
+  `contributor_id` bigint(20) DEFAULT NULL,
+  `county` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `amount` decimal(15,2) DEFAULT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type2` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `check_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `source_table` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `source_table_id` bigint(20) DEFAULT NULL,
+  `transaction_id_fec` varchar(25) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `sub_id` varchar(25) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0',
+  `pl_contributor_checked` tinyint(4) NOT NULL DEFAULT '0',
+  `is_split` tinyint(4) NOT NULL DEFAULT '0',
+  `pl_staging_id` bigint(20) DEFAULT NULL,
+  `pl_staging_loki_status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pl_production_id` bigint(20) DEFAULT NULL,
+  `pl_production_loki_status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `source_agency_org` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `source_agency_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `old_pl_staging_id` bigint(20) DEFAULT NULL,
+  `old_pl_staging_loki_status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `old_pl_staging_removed` tinyint(4) NOT NULL DEFAULT '0',
+  `old_pl_production_id` bigint(20) DEFAULT NULL,
+  `old_pl_production_loki_status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `old_pl_production_removed` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=33977 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci |
++++
+1 row in set (0.00 sec)
+
+mysql> show create table texas_campaign_finance_contributors;
+`texas_campaign_finance_contributors` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name_cleaned` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address_clean` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `city` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `county` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `state` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `zip` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `employer` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `job_title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sex` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `SUID` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `is_org` tinyint(4) NOT NULL DEFAULT '0',
+  `source_table` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `source_table_id` bigint(20) DEFAULT NULL,
+  `source_contributor_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `is_clean` tinyint(4) NOT NULL DEFAULT '0',
+  `pl_staging_id` bigint(20) DEFAULT NULL,
+  `pl_staging_loki_status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pl_production_id` bigint(20) DEFAULT NULL,
+  `pl_production_loki_status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `is_split` tinyint(4) NOT NULL DEFAULT '0',
+  `split_source_id` bigint(20) DEFAULT NULL,
+  `is_splitted` tinyint(4) NOT NULL DEFAULT '0',
+  `employer_is_org` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pl_employer_staging_id` bigint(20) DEFAULT NULL,
+  `pl_employer_staging_loki_status` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pl_employer_production_id` bigint(20) DEFAULT NULL,
+  `pl_employer_production_loki_status` varchar(25) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cleaned_employer_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `old_pl_staging_id` bigint(20) DEFAULT NULL,
+  `old_pl_staging_loki_status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `match_staging_checked` tinyint(4) NOT NULL DEFAULT '0',
+  `old_pl_production_id` bigint(20) DEFAULT NULL,
+  `old_pl_production_loki_status` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `match_production_checked` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=33977 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci |
++++
+1 row in set (0.00 sec)
+
+
+All the data for Texas is in this folder: https://drive.google.com/drive/folders/0B7YGBU5YHDqiQ1Y2bjJjUHZtZjA
+
+Put all those tables into 4 tables.
+
+Mapping data:
+Type,Filer name, legislative_district=district,party, jurisdiction_county=county goes to the committee table,
+First_name, middle_initial, last_name, office, party,jurisdiction_county= county goes to the candidates table
+Amount, cash or in kind=type ,receipt_date, code=type2 goes to the contribution table
+Contributor_name, contributor_address, contribution_city, contributor_state, contributor_zip, contributor_occupation, contributor_employer goes to the contributor table 
+
+
+
+
+Since this data is from Texas, state is Texas.
+Source_agency is State of Washington, source_agency_id is 645047912
+
+
+
+
+
+============
+recordType  formTypeCd  schedFormTypeCd reportInfoIdent receivedDt  infoOnlyFlag  filerIdent  filerTypeCd filerName contributionInfoId  contributionDt  contributionAmount  contributionDescr itemizeFlag travelFlag  contributorPersentTypeCd  contributorNameOrganization contributorNameLast contributorNameSuffixCd contributorNameFirst  contributorNamePrefixCd contributorNameShort  contributorStreetCity contributorStreetStateCd  contributorStreetCountyCd contributorStreetCountryCd  contributorStreetPostalCode contributorStreetRegion contributorEmployer contributorOccupation contributorJobTitle contributorPacFein  contributorOosPacFlag contributorSpouseLawFirmName  contributorParent1LawFirmName contributorParent2LawFirmName
+
+RCPT  MPAC  A1  730 20000705  N 10883 MPAC  El Paso Energy Corp. PAC  100000001 20000530  90    Y N INDIVIDUAL    LYTAL   JAMES H.      HOUSTON TX    USA 77024   THE EL PASO ENERGY CORPORATION  MANAGER     N
+========
+recordType  formTypeCd  schedFormTypeCd reportInfoIdent receivedDt  infoOnlyFlag  filerIdent  filerTypeCd filerName contributionInfoId  contributionDt  contributionAmount  contributionDescr itemizeFlag travelFlag  contributorPersentTypeCd  contributorNameOrganization contributorNameLast contributorNameSuffixCd contributorNameFirst  contributorNamePrefixCd contributorNameShort  contributorStreetCity contributorStreetStateCd  contributorStreetCountyCd contributorStreetCountryCd  contributorStreetPostalCode contributorStreetRegion contributorEmployer contributorOccupation contributorJobTitle contributorPacFein  contributorOosPacFlag contributorSpouseLawFirmName  contributorParent1LawFirmName contributorParent2LawFirmName
+
+contribs_01.csv
+contribs_34.csv
