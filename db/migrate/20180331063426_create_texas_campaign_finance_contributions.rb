@@ -28,7 +28,7 @@ class CreateTexasCampaignFinanceContributions < ActiveRecord::Migration
 		t.bigint :old_pl_production_id, limit:20
 		t.string :old_pl_production_loki_status, limit:10
 		t.integer :old_pl_production_removed, limit:1,null: false, default: 0
-		t.string :data_source_url, limit:255
+		# t.string :data_source_url, limit:255
 		# t.string :data_source_url, limit:255
       	#t.timestamps null: false
     end
