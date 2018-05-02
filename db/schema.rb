@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20180331064735) do
 
-  create_table "washington_campaign_finance_candidates", force: :cascade do |t|
+  create_table "texas_campaign_finance_candidates", force: :cascade do |t|
     t.string  "full_name",                     limit: 255
     t.string  "last_name",                     limit: 255
     t.string  "first_name",                    limit: 255
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20180331064735) do
     t.integer "real_candidate",                limit: 1,   default: 1
   end
 
-  create_table "washington_campaign_finance_committees", force: :cascade do |t|
+  create_table "texas_campaign_finance_committees", force: :cascade do |t|
     t.integer "candidate_id",              limit: 8
     t.string  "committee_name",            limit: 255
     t.string  "committee_number",          limit: 255
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 20180331064735) do
     t.string  "cleaned_committee_name",    limit: 255
   end
 
-  create_table "washington_campaign_finance_contributions", force: :cascade do |t|
+  create_table "texas_campaign_finance_contributions", force: :cascade do |t|
     t.date     "date"
     t.integer  "committee_id",                  limit: 8
     t.integer  "contributor_id",                limit: 8
@@ -128,10 +128,9 @@ ActiveRecord::Schema.define(version: 20180331064735) do
     t.integer  "old_pl_production_id",          limit: 8
     t.string   "old_pl_production_loki_status", limit: 10
     t.integer  "old_pl_production_removed",     limit: 1,                            default: 0,   null: false
-    t.string   "data_source_url",               limit: 255
   end
 
-  create_table "washington_campaign_finance_contributors", force: :cascade do |t|
+  create_table "texas_campaign_finance_contributors", force: :cascade do |t|
     t.string   "name",                               limit: 255
     t.string   "name_cleaned",                       limit: 255
     t.string   "address",                            limit: 255

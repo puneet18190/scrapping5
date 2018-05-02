@@ -2,12 +2,12 @@ task :import_data => :environment do
 # require 'pry'
   require 'csv'
   (1..34).each do |n|
-    n=n.rjust(2, '0')
-    csv_text = File.read("/home/puneet/Downloads/contribs_#{n}.csv.csv")
+    n=n.to_s.rjust(2, '0')
+    csv_text = File.read("/home/puneet/Downloads/Texas contributions tables/contribs_#{n}.csv")
     csv = CSV.parse(csv_text, :headers => true)
     arr=[]
     csv.each_with_index do |row,i|
-      puts i
+      puts "csv: #{n}, #{i}/#{csv.count}"
       recordType = row[0]
       formTypeCd = row[1]
       schedFormTypeCd = row[2]
@@ -45,34 +45,35 @@ task :import_data => :environment do
       contributorParent1LawFirmName = row[34]
       contributorParent2LawFirmName = row[35]
 
-      a=TexasCampaignFinanceCandidate.new
-      a.state = 'Texas'
-      a.full_name = candidate_name
-      a.last_name = candidate_name.split(" ").first
-      a.first_name = candidate_name.split(" ").last
-      a.party = party
-      a.full_address = candidate_address
-      a.phone = candidate_phone
-      a.email = candidate_email
-      a.save!
+      # a=TexasCampaignFinanceCandidate.new
+      # a.state = 'Texas'
+      # a.full_name = candidate_name
+      # a.last_name = candidate_name.split(" ").first
+      # a.first_name = candidate_name.split(" ").last
+      # a.party = party
+      # a.full_address = candidate_address
+      # a.phone = candidate_phone
+      # a.email = candidate_email
+      # a.save!
 
       b=TexasCampaignFinanceCommittee.new
       b.committee_name = filerName
       b.committee_number = filerIdent
+      b.type = filerTypeCd
       # b.committee_status = committee_status
       # b.election_year = election_year
-      b.candidate_id= a.id
+      # b.candidate_id= a.id
       # b.data_source_url = link
       b.data_source_state = 'Texas'
       # b.office_sought = office_sought
       # b.election_type = election_type
       b.register_data = receivedDt
-      b.amended_data = amended_date
-      b.chair_name = chairperson_name
-      b.chair_address = chairperson_address
-      b.treasurer_name = treasurer_name
-      b.treasurer_address = treasurer_address
-      b.party = party
+      # b.amended_data = amended_date
+      # b.chair_name = chairperson_name
+      # b.chair_address = chairperson_address
+      # b.treasurer_name = treasurer_name
+      # b.treasurer_address = treasurer_address
+      # b.party = party
       b.save!
 
       c=TexasCampaignFinanceContributor.new
