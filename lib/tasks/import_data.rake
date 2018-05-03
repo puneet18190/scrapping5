@@ -55,43 +55,49 @@ task :import_data => :environment do
       # a.phone = candidate_phone
       # a.email = candidate_email
       # a.save!
+      if filerName.present? && filerIdent.present? &&  filerTypeCd.present?
+            @b=TexasCampaignFinanceCommittee.new
+            @b.committee_name = filerName
+            @b.committee_number = filerIdent
+            @b.type = filerTypeCd
+            # b.committee_status = committee_status
+            # b.election_year = election_year
+            # b.candidate_id= a.id
+            # b.data_source_url = link
+            @b.data_source_state = 'Texas'
+            # b.office_sought = office_sought
+            # b.election_type = election_type
+            # b.register_data = receivedDt
+            # b.amended_data = amended_date
+            # b.chair_name = chairperson_name
+            # b.chair_address = chairperson_address
+            # b.treasurer_name = treasurer_name
+            # b.treasurer_address = treasurer_address
+            # b.party = party
+            @b.save!
+      end
 
-      b=TexasCampaignFinanceCommittee.new
-      b.committee_name = filerName
-      b.committee_number = filerIdent
-      b.type = filerTypeCd
-      # b.committee_status = committee_status
-      # b.election_year = election_year
-      # b.candidate_id= a.id
-      # b.data_source_url = link
-      b.data_source_state = 'Texas'
-      # b.office_sought = office_sought
-      # b.election_type = election_type
-      b.register_data = receivedDt
-      # b.amended_data = amended_date
-      # b.chair_name = chairperson_name
-      # b.chair_address = chairperson_address
-      # b.treasurer_name = treasurer_name
-      # b.treasurer_address = treasurer_address
-      # b.party = party
-      b.save!
-
-      c=TexasCampaignFinanceContributor.new
-      c.state = 'Texas'
-      c.job_title = ""
-      c.employer = contributor_detail
-      c.name = contributor
-      c.save!
+      @c=TexasCampaignFinanceContributor.new
+      @c.state = 'Texas'
+      @c.name = "#{contributorNameFirst} #{contributorNameLast}"
+      @c.job_title = contributorJobTitle
+      @c.employer = contributorEmployer
+      @c.city = contributorStreetCity
+      @c.state = contributorStreetStateCd
+      @c.county = contributorStreetCountryCd
+      @c.zip = contributorStreetPostalCode
+      @c.address = "#{contributorStreetCity} #{contributorStreetStateCd} #{contributorStreetCountryCd} #{contributorStreetPostalCode}"
+      @c.save!
 
       d=TexasCampaignFinanceContribution.new
-      d.source_agency_org = 'State of Washington'
-      d.source_agency_id = '645047912'
-      d.date = date
-      d.amount = amount.to_f
-      d.committee_id = b.id 
-      d.contributor_id = c.id
-      d.type = schedule_2
-      d.type2 = schedule_1
+      d.source_agency_org = 'Texas Ethics Commission'
+      d.source_agency_id = '644535012'
+      d.date = contributionDt
+      d.amount = contributionAmount
+      d.committee_id = @b.try(:id)
+      d.contributor_id = @c.try(:id)
+      # d.type = schedule_2
+      # d.type2 = schedule_1
       d.save!
     end
   end
