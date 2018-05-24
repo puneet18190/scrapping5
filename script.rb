@@ -10,7 +10,6 @@ require 'metainspector'
 
 link = ["https://www.nvsos.gov/SOSCandidateServices/AnonymousAccess/CEFDSearchUU/CandidateDetails.aspx?o=pPF7aFQCI%252bYuqYwEcW3VBg%253d%253d"]
 info = [];
-# CSV.open("data.csv","wb") do |record|
 link.each_with_index do |l, i|
 	page = MetaInspector.new l
 	doc = page.parsed
@@ -33,9 +32,7 @@ link.each_with_index do |l, i|
 	    c.state = contri_a3.split(" ")[0]
 	    c.zip = contri_a3.split(" ")[1]
 	    c.save!
-	    end
 
-		# rec_link = []
 		doc.css("#ctl00_MainContent_dgSearchResults_ctl00 tbody tr").each do |r|
 			date = r.css("td")[0].text
 			amount = r.css("td")[2].text.scan(/\d/).join
@@ -51,7 +48,6 @@ link.each_with_index do |l, i|
 		    d.type = type
 		    d.data_source_url = l
 		    d.save!
-		    end
 
 		    page1 = MetaInspector.new rec_link
 			doc1 = page1.parsed
@@ -113,35 +109,5 @@ link.each_with_index do |l, i|
 			end
 		end
 	end
-# end
 
-# CSV.open("data1.csv","wb") do |record|
-	# rec_link.each do |r_l|
-	# 	page1 = MetaInspector.new r_l
-	# 	doc1 = page1.parsed
-	# 	r_entity = doc1.css("#ctl00_MainContent_lblType").text
-		
-	# 	if r_entity.include?('Candidate')
-	# 		r_name = doc1.css("#ctl00_MainContent_lblCandidateName").text
-	# 		r_party = doc1.css("#ctl00_MainContent_lblParty").text
-	# 		offc = doc1.css("#ctl00_MainContent_lblOffice").text
-	# 		r_offc1 = offc.split(',')[0]
-	# 		r_offc2 = offc.split(',')[1]
-	# 		r_address = doc1.css("#ctl00_MainContent_lblAddress").text
-	# 		r_city = doc1.css("#ctl00_MainContent_lblCity").text
-	# 		r_state = doc1.css("#ctl00_MainContent_lblState").text
-	# 		r_zip = doc1.css("#ctl00_MainContent_lblZip").text
-	# 		r_phone = doc1.css("#ctl00_MainContent_lblPhone").text
-	# 		r_email = doc1.css("#ctl00_MainContent_lblEmail").text
-	# 	else
-	# 		r_name = doc1.css("#ctl00_MainContent_lblGroupName").text
-	# 		r_grouptype = doc1.css("#ctl00_MainContent_lblGroupTypeDesc").text
-	# 		r_groupname = doc1.css("#ctl00_MainContent_lblGroupContactName").text
-	# 		r_address = doc1.css("#ctl00_MainContent_lblAddress").text
-	# 		r_phone = doc1.css("#ctl00_MainContent_lblPhone").text
-	# 		r_email = doc1.css("#ctl00_MainContent_lblEmail").text
-	# 		r_status = doc1.css("#ctl00_MainContent_lblStatus").text
-	# 	end
-	# end
-# end
 end
