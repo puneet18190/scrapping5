@@ -1,6 +1,6 @@
 class CreateNevadaCountiesCampaignFinanceCandidates < ActiveRecord::Migration
   def change
-    create_table :nissouri_counties_campaign_finance_candidatesNevada_counties_campaign_finance_candidates do |t|
+    create_table :nevada_counties_campaign_finance_candidates do |t|
       t.string :full_name, :limit => 255
       t.string :last_name, :limit => 255
       t.string :first_name, :limit => 255

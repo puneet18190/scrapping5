@@ -13,13 +13,13 @@
 
 ActiveRecord::Schema.define(version: 20180331064735) do
 
-  create_table "missouri_counties_campaign_finance_candidates", force: :cascade do |t|
+  create_table "nevada_counties_campaign_finance_candidates", force: :cascade do |t|
     t.string  "full_name",                     limit: 255
     t.string  "last_name",                     limit: 255
     t.string  "first_name",                    limit: 255
     t.string  "middle_name",                   limit: 255
     t.string  "party",                         limit: 30
-    t.string  "current_occupation",            limit: 255
+    t.string  "office_sought",                 limit: 255
     t.string  "district",                      limit: 255
     t.string  "full_address",                  limit: 255
     t.string  "address_1",                     limit: 255
@@ -51,13 +51,14 @@ ActiveRecord::Schema.define(version: 20180331064735) do
     t.integer "match_production_checked",      limit: 1,   default: 0, null: false
   end
 
-  create_table "missouri_counties_campaign_finance_committees", force: :cascade do |t|
+  create_table "nevada_counties_campaign_finance_committees", force: :cascade do |t|
     t.integer "candidate_id",              limit: 8
     t.string  "committee_name",            limit: 255
     t.string  "committee_number",          limit: 255
     t.string  "district",                  limit: 255
     t.string  "type",                      limit: 255
     t.string  "party",                     limit: 255
+    t.string  "status",                    limit: 255
     t.string  "election_year",             limit: 255
     t.string  "office_sought",             limit: 255
     t.string  "county",                    limit: 255
@@ -98,7 +99,7 @@ ActiveRecord::Schema.define(version: 20180331064735) do
     t.string  "cleaned_committee_name",    limit: 255
   end
 
-  create_table "missouri_counties_campaign_finance_contributions", force: :cascade do |t|
+  create_table "nevada_counties_campaign_finance_contributions", force: :cascade do |t|
     t.date     "date"
     t.integer  "committee_id",                  limit: 8
     t.integer  "contributor_id",                limit: 8
@@ -129,7 +130,7 @@ ActiveRecord::Schema.define(version: 20180331064735) do
     t.string   "data_source_url",               limit: 255
   end
 
-  create_table "missouri_counties_campaign_finance_contributors", force: :cascade do |t|
+  create_table "nevada_counties_campaign_finance_contributors", force: :cascade do |t|
     t.string   "name",                               limit: 255
     t.string   "name_cleaned",                       limit: 255
     t.string   "address",                            limit: 255

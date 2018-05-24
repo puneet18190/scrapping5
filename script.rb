@@ -6,11 +6,12 @@ require 'nokogiri'
 require 'open-uri'
 require 'metainspector'
 
-link = "https://www.nvsos.gov/SOSCandidateServices/AnonymousAccess/CEFDSearchUU/"
+# link = "https://www.nvsos.gov/SOSCandidateServices/AnonymousAccess/CEFDSearchUU/"
 
+link = ["https://www.nvsos.gov/SOSCandidateServices/AnonymousAccess/CEFDSearchUU/CandidateDetails.aspx?o=pPF7aFQCI%252bYuqYwEcW3VBg%253d%253d"]
 info = [];
 # CSV.open("data.csv","wb") do |record|
-link.each do |l|
+link.each_with_index do |l, i|
 	page = MetaInspector.new l
 	doc = page.parsed
 	contri_name = doc.css("#ctl00_MainContent_lblContactName").text
