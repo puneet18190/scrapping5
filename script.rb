@@ -5,7 +5,7 @@ require 'csv'
 require 'nokogiri'
 require 'open-uri'
 require 'metainspector'
-
+require 'rails'
 # link = "https://www.nvsos.gov/SOSCandidateServices/AnonymousAccess/CEFDSearchUU/"
 
 link = ["https://www.nvsos.gov/SOSCandidateServices/AnonymousAccess/CEFDSearchUU/CandidateDetails.aspx?o=pPF7aFQCI%252bYuqYwEcW3VBg%253d%253d"]
@@ -15,12 +15,12 @@ link.each_with_index do |l, i|
 	doc = page.parsed
 	contri_name = doc.css("#ctl00_MainContent_lblContactName").text
 	address = doc.css("#ctl00_MainContent_lblContactAddress").text
-	contri_a1 = doc.css("#ctl00_MainContent_lblContactAddress").children[0].text
-	contri_a2 = doc.css("#ctl00_MainContent_lblContactAddress").children[1].text
-	a3 = doc.css("#ctl00_MainContent_lblContactAddress").children[2].text
-	contri_a3 = a3.split(",")[0]
-	contri_a4 = a3.split(",")[1]
-	contri_total = doc.css("#ctl00_MainContent_lblContTotal").text.scan(/\d+/).join
+	contri_a1 = (doc.css("#ctl00_MainContent_lblContactAddress").children[0].nil? ? "" : doc.css("#ctl00_MainContent_lblContactAddress").children[0].text)
+	contri_a2 = (doc.css("#ctl00_MainContent_lblContactAddress").children[1].nil? ? "" : doc.css("#ctl00_MainContent_lblContactAddress").children[1].text)
+	a3 = (doc.css("#ctl00_MainContent_lblContactAddress").children[2].nil? ? "" : doc.css("#ctl00_MainContent_lblContactAddress").children[2].text)
+	contri_a3 = (a3.blank? ? "" : a3.split(",")[0])
+	contri_a4 = (a3.blank? ? "" : a3.split(",")[1])
+	contri_total = (doc.css("#ctl00_MainContent_lblContTotal").blank? ? "" : doc.css("#ctl00_MainContent_lblContTotal").text.scan(/\d+/).join)
 
 	x=NevadaCampaignFinanceContributor.where(name: contri_name).first
 	if x.blank?
