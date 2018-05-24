@@ -46,3 +46,4 @@ group :development do
 end
 gem 'rails_db_info'
 gem 'soda-ruby'
+gem  'metainspector'

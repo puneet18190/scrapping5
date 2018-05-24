@@ -11,6 +11,7 @@ require 'rails'
 link = ["https://www.nvsos.gov/SOSCandidateServices/AnonymousAccess/CEFDSearchUU/CandidateDetails.aspx?o=pPF7aFQCI%252bYuqYwEcW3VBg%253d%253d"]
 info = [];
 link.each_with_index do |l, i|
+	puts i
 	page = MetaInspector.new l
 	doc = page.parsed
 	contri_name = doc.css("#ctl00_MainContent_lblContactName").text
